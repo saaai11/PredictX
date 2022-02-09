@@ -1,0 +1,37 @@
+:host {
+  .container {
+    position: absolute;
+    width: 100%;
+    top: 20%;
+
+    .title {
+      text-align: center;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+
+      .inputs {
+        margin: 10px 0;
+        border-radius: 30px;
+        height: 30px;
+        border: 1px solid #9b9b9b;
+        width: 65%;
+        text-align: center;
+      }
+      .button {
+        margin-top: 20px;
+        border-radius: 20px;
+        height: 30px;
+        width: 50%;
+        color: white;
+        background-color: #00adff;
+        font-weight: 800;
+        font-size: 15px;
+        border: 1px transparent;
+      }
+    }
+  }
+}
