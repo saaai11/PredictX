@@ -18,17 +18,12 @@ export class AppComponent implements OnInit {
   s1 = 'my&friend&Paul has heavy hats! &';
   s2 = 'my friend John has many many friends &';
 
-  unamePattern = '[^@]+@[^@]+.[a-zA-Z]{2,6}';
-  emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
-
-  isValidFormSubmitted = null;
-
   results = false;
   finalResult!: string;
 
   form: FormGroup = this.formBuilder.group({
-    firstValue: ['', [Validators.pattern(this.emailPattern)]],
-    secondValue: ['', [Validators.pattern(this.emailPattern)]],
+    firstValue: ['', [Validators.required]],
+    secondValue: ['', [Validators.required]],
   });
 
   refresh(): void {
@@ -50,27 +45,35 @@ export class AppComponent implements OnInit {
           this.finalCount.push({
             index: i,
             data: freq1[i],
-            arrayType: '1',
+            arrayType: 1,
           });
         } else if (freq1[i] < freq2[i]) {
           this.finalCount.push({
             index: i,
             data: freq2[i],
-            arrayType: '2',
+            arrayType: 2,
           });
         } else if (freq1[i] === freq2[i]) {
           this.finalCount.push({
             index: i,
             data: freq1[i] || freq2[i],
-            arrayType: '=',
+            arrayType: 3,
           });
         }
       }
     }
 
-    this.finalCount.sort((a, b) =>
-      a.data < b.data ? 1 : b.data < a.data ? -1 : 0
-    );
+    this.finalCount.sort((a, b) => b.data - a.data);
+
+    this.finalCount.sort((a, b) => {
+      if (a.data == b.data) {
+        return a.arrayType - b.arrayType;
+      }
+
+      return 1;
+    });
+
+    console.log(this.finalCount, 'fina;');
 
     let output = '';
 
@@ -84,13 +87,15 @@ export class AppComponent implements OnInit {
         j--;
       }
 
-      output += this.finalCount[i].arrayType + ':' + data + '/';
+      if (this.finalCount[i].arrayType == 3) output += '=' + ':' + data + '/';
+      else output += this.finalCount[i].arrayType + ':' + data + '/';
     }
 
     let out = output.slice(0, -1);
 
     this.finalResult = out;
     this.results = true;
+    console.log(out, 'ans');
   }
 
   get firstValue(): FormControl {
@@ -120,5 +125,5 @@ export class AppComponent implements OnInit {
 export interface IFinalCount {
   index: number;
   data: number;
-  arrayType: string;
+  arrayType: number;
 }
