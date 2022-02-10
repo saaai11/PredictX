@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultComponent implements OnInit {
-  @Input() result!: string;
+  @Input() result: string = '';
   constructor() {}
 
   ngOnInit(): void {}

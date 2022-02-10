@@ -26,12 +26,8 @@ export class AppComponent implements OnInit {
     secondValue: ['', [Validators.required]],
   });
 
-  refresh(): void {
-    window.location.reload();
-  }
-
   onSubmit(form: any) {
-    console.log(form.firstValue, form.secondValue);
+    this.finalCount = [];
 
     let freq1 = new Array(26);
     let freq2 = new Array(26);
@@ -69,13 +65,10 @@ export class AppComponent implements OnInit {
       if (a.data == b.data) {
         return a.arrayType - b.arrayType;
       }
-
-      return 1;
+      return 0;
     });
 
-    console.log(this.finalCount, 'fina;');
-
-    let output = '';
+    let output: string = '';
 
     for (let i = 0; i < this.finalCount.length; i++) {
       let character = String.fromCharCode(this.finalCount[i].index + 97);
@@ -91,11 +84,9 @@ export class AppComponent implements OnInit {
       else output += this.finalCount[i].arrayType + ':' + data + '/';
     }
 
-    let out = output.slice(0, -1);
+    this.finalResult = output.slice(0, -1);
 
-    this.finalResult = out;
     this.results = true;
-    console.log(out, 'ans');
   }
 
   get firstValue(): FormControl {
